@@ -1,0 +1,16 @@
+# Build output
+public/
+resources/
+
+# Hugo cache
+.hugo_build.lock
+
+# OS / Editor
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Local env
+.env
+.env.local

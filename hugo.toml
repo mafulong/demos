@@ -1,0 +1,30 @@
+baseURL = "/demos/"
+languageCode = "en-us"
+title = "Demos"
+theme = "hugo-book"
+
+# Required for Hugo 0.146+ to suppress some warnings
+disablePathToLower = false
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.tableOfContents]
+    startLevel = 1
+
+[params]
+  BookTheme = "auto"
+  BookSearch = true
+  BookToc = true
+  BookComments = false
+  BookSection = "docs"
+
+[menu]
+  [[menu.main]]
+    name = "Crypto Arbitrage"
+    url = "/docs/"
+    weight = 1
+
+[pagination]
+  disablePathToList = true

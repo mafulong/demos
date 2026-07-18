@@ -1,0 +1,40 @@
+---
+title: "做市策略"
+weight: 7
+---
+
+
+**原理**：在买卖两侧挂单，吃 maker rebate / spread 收入。需要极低延迟、深度流动性、严格风控。
+
+**现实**：做市已被 Citadel / Jane Street / Wintermute 等专业公司垄断，散户几乎不可能与之竞争。除非：
+- 某个新交易所刚上线，订单簿薄（早期机会）
+- 某小币种流动性差，专业做市未覆盖
+- 自有低延迟基础设施（co-location）和专业团队
+
+## 推荐
+
+| Repo | ★ | 说明 |
+|------|---|------|
+| [nkaz001/hftbacktest](https://github.com/nkaz001/hftbacktest) | 4282 | **HFT 回测框架**（C++/Rust/Python），高质量。不是实盘 bot |
+| [ctubio/Krypto-trading-bot](https://github.com/ctubio/Krypto-trading-bot) | 3706 | 自托管 HFT 做市 bot |
+| [Drakkar-Software/OctoBot-Market-Making](https://github.com/Drakkar-Software/OctoBot-Market-Making) | 36 | MEXC / Bitmart / Binance 做市 |
+
+## 做市框架（非纯做市但含策略）
+
+- [Hummingbot](https://github.com/hummingbot/hummingbot)（19k★）：业内最知名，内置 pure market making / cross-exchange market making / amm arbitrage 多种策略
+- [freqtrade](https://github.com/freqtrade/freqtrade)（52k★）：通用框架，可写做市策略
+- [OctoBot](https://github.com/Drakkar-Software/OctoBot)（6k★）：含 AI / Grid / DCA / 做市
+
+## 关键资源
+
+- [Hummingbot 学术文章](https://hummingbot.org/blog/)：做市原理讲解
+- [Wintermute Blog](https://wintermute.com/research/)：专业做市视角
+- [Paradigm Research](https://www.paradigm.xyz/)：MEV + 做市研究
+
+## 做市入门建议
+
+1. **别用真钱起手**。Hummingbot 有 paper trade 模式
+2. **小币种先**：BTC/ETH 做市已被吃得骨头都不剩
+3. **算清 inventory risk**：持仓太偏会被强平
+4. **API rate limit**：别被交易所 ban 了
+5. **研究 quote stickiness**：挂单撤单频率太高的策略容易被识别为 spam

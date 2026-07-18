@@ -1,0 +1,67 @@
+---
+title: "Hyperliquid 专项"
+weight: 10
+---
+
+
+**Hyperliquid** 是去中心化永续合约交易所（自建 L1），特色：
+- 链上撮合 + 链上结算 + 自托管
+- 体验接近 CEX（订单簿撮合、API 完备）
+- funding rate 经常比 CEX 高（散户多、套利者少），适合 funding rate 套利
+- 已有 Python SDK、TypeScript SDK
+
+## 推荐
+
+| Repo | ★ | 说明 |
+|------|---|------|
+| [origamidottech/hyperliquid-trading-bot](https://github.com/origamidottech/hyperliquid-trading-bot) | 137 | 跟单 + Hip-3 |
+| [hypurrquant/perp-cli](https://github.com/hypurrquant/perp-cli) | 32 | 多 DEX 永续 CLI + MCP（Pacifica + Hyperliquid） |
+| [MarilynClarke/Hyperliquid-Copy-Trading-Bot](https://github.com/MarilynClarke/Hyperliquid-Copy-Trading-Bot) | 322 | **疑似 spam 复制命名**（仓库名重复 "hyperliquid copy bot"），谨慎 |
+
+> ⚠️ Hyperliquid 专项 repo star 数普遍 < 200，**建议 fork 通用框架（freqtrade / Hummingbot）接 Hyperliquid Python SDK**，比用现成 bot 安全。
+
+## Hyperliquid 官方 SDK / 工具
+
+| Repo | 说明 |
+|------|------|
+| [hyperliquid-dex/hyperliquid-python-sdk](https://github.com/hyperliquid-dex/hyperliquid-python-sdk) | 官方 Python SDK |
+| [hyperliquid-dex/hyperliquid-ts-sdk](https://github.com/hyperliquid-dex/hyperliquid-ts-sdk) | 官方 TypeScript SDK |
+| [hyperliquid-dev](https://github.com/hyperliquid-dev) | 社区资源集合 |
+
+## 典型策略
+
+### 1. Hyperliquid ↔ Binance funding rate 套利
+
+Hyperliquid 上 BTC funding rate 经常比 Binance 高很多（hyperliquid 散户多 + funding 8h 结算）。
+
+```python
+from hyperliquid.info import Info
+from hyperliquid.exchange import Exchange
+
+# 拉 hyperliquid BTC funding
+info = Info(base_url="https://api.hyperliquid.xyz")
+meta = info.meta()
+# 找到 BTC perp 对应的 funding rate
+```
+
+配合 aoki-h-jp/funding-rate-arbitrage 用：检测 divergence → Hyperliquid 做空 + Binance 现货买入。
+
+### 2. Hyperliquid 内部跨合约套利
+
+HIP-3（Hyperliquid Improvement Proposal 3）允许多个 deployer 部署自己的永续合约，同一资产在不同 deployer 之间可能有价差。
+
+### 3. Hyperliquid 做市
+
+订单簿深度低时挂单吃 spread。需注意 inventory risk。
+
+## 接入建议
+
+1. **API key**：Hyperliquid 用私钥签名，不需要传统 API key，**私钥泄露 = 资金全丢**
+2. **环境隔离**：跑 bot 的机器不存放主钱包私钥，用专门的 trading wallet（小金额）
+3. **风控**：单日最大亏损、单笔最大 notional、持仓上限
+
+## 注意事项
+
+- Hyperliquid 自托管机制意味着没有客服可以冻结账户，**一切责任在自己**
+- Funding rate 高 ≠ 一直高，资金涌入后会被压平
+- 没有 KYC，但 IP 可能被识别为美国后限制（合规原因）
