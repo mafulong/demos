@@ -6,18 +6,20 @@ bookCollapseSection: true
 
 ## 目录结构
 
-| 文件 | 套利类型 |
+> 关于本站定位与发布流程，见 [关于本站](about/)。
+
+| 主题 | 套利类型 |
 |------|----------|
-| [01-funding-rate.md](01-funding-rate.md) | 资金费率套利（delta-neutral） |
-| [02-triangular.md](02-triangular.md) | 三角套利（同一交易所内 3 对） |
-| [03-cross-exchange.md](03-cross-exchange.md) | 跨交易所套利（CEX 之间） |
-| [04-mev-dex.md](04-mev-dex.md) | MEV / DEX 套利（链上） |
-| [05-statistical.md](05-statistical.md) | 统计套利 / Pairs Trading |
-| [06-market-making.md](06-market-making.md) | 做市 / 高频回测 |
-| [07-flash-loan.md](07-flash-loan.md) | 闪电贷套利（EVM） |
-| [08-frameworks.md](08-frameworks.md) | 通用交易框架（非纯套利） |
-| [09-hyperliquid.md](09-hyperliquid.md) | Hyperliquid 专项 |
-| [10-cex-dex.md](10-cex-dex.md) | CEX-DEX 套利 |
+| [Funding Rate 套利](funding-rate/) | 资金费率套利（delta-neutral） |
+| [三角套利](triangular/) | 三角套利（同一交易所内 3 对） |
+| [跨交易所套利](cross-exchange/) | 跨交易所套利（CEX 之间） |
+| [MEV & DEX 套利](mev-dex/) | MEV / DEX 套利（链上） |
+| [统计套利](statistical/) | 统计套利 / Pairs Trading |
+| [做市策略](market-making/) | 做市 / 高频回测 |
+| [闪电贷套利](flash-loan/) | 闪电贷套利（EVM） |
+| [通用交易框架](frameworks/) | 通用交易框架（非纯套利） |
+| [Hyperliquid 专项](hyperliquid/) | Hyperliquid 专项 |
+| [CEX-DEX 套利](cex-dex/) | CEX-DEX 套利 |
 
 ## 速查：按场景选型
 
