@@ -6,7 +6,7 @@ cd "$(dirname "$0")"
 
 echo "▶ Building site..."
 rm -rf public
-hugo --minify --baseURL "/demos/"
+hugo --minify --baseURL "/demos/" --buildFuture
 
 echo "▶ Pushing public/ to gh-pages..."
 pushd public > /dev/null
