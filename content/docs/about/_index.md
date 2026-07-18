@@ -23,7 +23,7 @@ weight: 2
 2. Claude 生成带日期的文件名与 frontmatter，并**在发布前请你确认**（不会未经确认就 push）。
 3. 确认后自动构建推送到 `gh-pages`，约 1 分钟后线上生效。
 
-底层由 `deploy.sh` 完成（`hugo --minify` → 强制推送 gh-pages 分支）。该 force-push 是破坏性的，所以发布前必须有用户确认。
+底层由 `deploy.sh` 完成（`hugo --minify --buildFuture` → 强制推送 gh-pages 分支）。该 force-push 是破坏性的，所以发布前必须有用户确认。
 
 ## 注意事项
 
