@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>通用交易框架 on Demos</title><link>/demos/docs/frameworks/</link><description>Recent content in 通用交易框架 on Demos</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Sun, 19 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="/demos/docs/frameworks/index.xml" rel="self" type="application/rss+xml"/><item><title>freqtrade 跑 funding rate 策略</title><link>/demos/docs/frameworks/2026-07-19-freqtrade-funding-strategy/</link><pubDate>Sun, 19 Jul 2026 00:00:00 +0000</pubDate><guid>/demos/docs/frameworks/2026-07-19-freqtrade-funding-strategy/</guid><description>&lt;h2 id="为什么选-freqtrade"&gt;为什么选 freqtrade&lt;a class="anchor" href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e9%80%89-freqtrade"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;star 数最多（&amp;gt;50k），bug 修得快&lt;/li&gt;
+&lt;li&gt;策略用 Python 写，可读性好&lt;/li&gt;
+&lt;li&gt;自带 dry-run / 回测 / 监控 / Telegram 通知&lt;/li&gt;
+&lt;li&gt;支持多个 CEX 的永续合约（通过 CCXT）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="安装"&gt;安装&lt;a class="anchor" href="#%e5%ae%89%e8%a3%85"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git clone https://github.com/freqtrade/freqtrade
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cd freqtrade
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;./setup.sh -i&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="最小-funding-rate-策略"&gt;最小 funding rate 策略&lt;a class="anchor" href="#%e6%9c%80%e5%b0%8f-funding-rate-%e7%ad%96%e7%95%a5"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;from&lt;/span&gt; freqtrade.strategy &lt;span style="color:#f92672"&gt;import&lt;/span&gt; IStrategy
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; ccxt
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;class&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;FundingRateArb&lt;/span&gt;(IStrategy):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; timeframe &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;5m&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;def&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;populate_indicators&lt;/span&gt;(self, dataframe, metadata):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# 拉 funding rate&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; exchange &lt;span style="color:#f92672"&gt;=&lt;/span&gt; ccxt&lt;span style="color:#f92672"&gt;.&lt;/span&gt;binance({&lt;span style="color:#e6db74"&gt;&amp;#39;options&amp;#39;&lt;/span&gt;: {&lt;span style="color:#e6db74"&gt;&amp;#39;defaultType&amp;#39;&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#39;future&amp;#39;&lt;/span&gt;}})
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; funding &lt;span style="color:#f92672"&gt;=&lt;/span&gt; exchange&lt;span style="color:#f92672"&gt;.&lt;/span&gt;fetch_funding_rate(metadata[&lt;span style="color:#e6db74"&gt;&amp;#39;pair&amp;#39;&lt;/span&gt;])
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; dataframe[&lt;span style="color:#e6db74"&gt;&amp;#39;funding&amp;#39;&lt;/span&gt;] &lt;span style="color:#f92672"&gt;=&lt;/span&gt; funding[&lt;span style="color:#e6db74"&gt;&amp;#39;fundingRate&amp;#39;&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; dataframe
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;def&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;populate_entry_trend&lt;/span&gt;(self, dataframe, metadata):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# funding &amp;gt; 阈值 → 做空吃 funding&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; dataframe&lt;span style="color:#f92672"&gt;.&lt;/span&gt;loc[dataframe[&lt;span style="color:#e6db74"&gt;&amp;#39;funding&amp;#39;&lt;/span&gt;] &lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0.0005&lt;/span&gt;, &lt;span style="color:#e6db74"&gt;&amp;#39;enter_short&amp;#39;&lt;/span&gt;] &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; dataframe
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;def&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;populate_exit_trend&lt;/span&gt;(self, dataframe, metadata):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; dataframe&lt;span style="color:#f92672"&gt;.&lt;/span&gt;loc[dataframe[&lt;span style="color:#e6db74"&gt;&amp;#39;funding&amp;#39;&lt;/span&gt;] &lt;span style="color:#f92672"&gt;&amp;lt;&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0.0001&lt;/span&gt;, &lt;span style="color:#e6db74"&gt;&amp;#39;exit_short&amp;#39;&lt;/span&gt;] &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; dataframe&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="跑起来"&gt;跑起来&lt;a class="anchor" href="#%e8%b7%91%e8%b5%b7%e6%9d%a5"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;freqtrade trade &lt;span style="color:#ae81ff"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; --strategy FundingRateArb &lt;span style="color:#ae81ff"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; --config user_data/config_binance.json &lt;span style="color:#ae81ff"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; --dry-run &lt;span style="color:#75715e"&gt;# 先模拟盘&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="局限"&gt;局限&lt;a class="anchor" href="#%e5%b1%80%e9%99%90"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;freqtrade 默认 &lt;strong&gt;不支持 cross-exchange 套利&lt;/strong&gt;（策略只看单个 timeframe）&lt;/li&gt;
+&lt;li&gt;跨所 funding 套利需自写监控 + 下单逻辑，或用 &lt;a href="../../funding-rate/"&gt;aoki-h-jp/funding-rate-arbitrage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;现货 + 永续对冲也是手写，freqtrade 不内置 delta-neutral&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>

@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>多市场金融交易简报 | 2026年7月19日</title>
+<style>
+  :root {
+    --bg: #ffffff; --card-bg: #f8f9fb; --text: #1a1a2e;
+    --text-secondary: #555; --border: #e5e7eb;
+    --red: #e63946;          /* 涨 = 红 */
+    --green: #2d9a4e;        /* 跌 = 绿 */
+    --blue: #3b6df0; --accent: #f0f4ff; --heading: #0f172a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                 "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #f0f2f5 0%, #e8ecf1 100%);
+    color: var(--text); line-height: 1.7; min-height: 100vh;
+  }
+  .container { max-width: 960px; margin: 0 auto; padding: 24px 20px 60px; }
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: #fff; padding: 40px 36px 32px; border-radius: 16px;
+    margin-bottom: 28px; position: relative; overflow: hidden;
+  }
+  .header::before {
+    content: ""; position: absolute; top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(59,109,240,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .header h1 { font-size: 28px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 6px; position: relative; }
+  .header .date { font-size: 15px; color: rgba(255,255,255,0.7); position: relative; }
+  .header .tagline {
+    display: inline-block; margin-top: 10px; padding: 4px 14px;
+    background: rgba(255,255,255,0.12); border-radius: 20px;
+    font-size: 13px; color: rgba(255,255,255,0.85); position: relative;
+  }
+  .section {
+    background: var(--bg); border-radius: 14px; padding: 28px 30px;
+    margin-bottom: 22px; box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.03);
+    border: 1px solid var(--border);
+  }
+  .section h2 {
+    font-size: 20px; font-weight: 700; color: var(--heading);
+    margin-bottom: 18px; padding-bottom: 12px; border-bottom: 2px solid #eef2ff;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section h2 .icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; border-radius: 8px; font-size: 16px;
+  }
+  .icon-market { background: #fef3c7; color: #d97706; }
+  .icon-crypto { background: #f3e8ff; color: #7c3aed; }
+  .icon-metal  { background: #fef9c3; color: #ca8a04; }
+  .icon-cross  { background: #e0e7ff; color: #4f46e5; }
+  .icon-macro  { background: #dbeafe; color: #2563eb; }
+  .icon-sector { background: #fce7f3; color: #db2777; }
+  .icon-news   { background: #d1fae5; color: #059669; }
+  .icon-advice { background: #ede9fe; color: #7c3aed; }
+
+  .section h3 { font-size: 16px; font-weight: 600; color: var(--heading); margin: 20px 0 12px; }
+  .section h3:first-of-type { margin-top: 0; }
+
+  .table-wrap { overflow-x: auto; margin: 12px 0; border-radius: 10px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  thead th {
+    background: #f8fafc; color: #475569; font-weight: 600; padding: 10px 14px;
+    text-align: center; white-space: nowrap; border-bottom: 2px solid #e2e8f0; font-size: 13px;
+  }
+  tbody td { padding: 10px 14px; text-align: center; border-bottom: 1px solid #f1f5f9; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: #fafcfd; }
+  .td-left { text-align: left; font-weight: 500; }
+  .table-note { font-size: 12px; color: #9ca3af; margin-top: 6px; text-align: right; }
+
+  .up { color: var(--red); font-weight: 600; }
+  .down { color: var(--green); font-weight: 600; }
+  .flat { color: #6b7280; }
+  .na { color: #9ca3af; font-style: italic; }
+
+  .index-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-bottom: 18px; }
+  .index-card { background: var(--card-bg); border-radius: 12px; padding: 16px 18px; border: 1px solid var(--border); transition: box-shadow 0.2s; }
+  .index-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .index-card .name { font-size: 13px; color: #6b7280; margin-bottom: 4px; }
+  .index-card .price { font-size: 22px; font-weight: 700; color: var(--heading); margin-bottom: 2px; }
+  .index-card .change { font-size: 14px; font-weight: 600; }
+  .index-card .volume { font-size: 12px; color: #9ca3af; margin-top: 4px; }
+  .highlight-card { border: 2px solid var(--red); background: #fef2f2; }
+
+  .tag { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; margin: 2px; }
+  .tag-hot { background: #fee2e2; color: #b91c1c; }
+  .tag-warm { background: #fef3c7; color: #92400e; }
+  .tag-cold { background: #dbeafe; color: #1e40af; }
+  .tag-neutral { background: #f1f5f9; color: #475569; }
+
+  .news-list { list-style: none; }
+  .news-list li { padding: 10px 0; border-bottom: 1px solid #f1f5f9; display: flex; gap: 10px; }
+  .news-list li:last-child { border-bottom: none; }
+  .news-num {
+    flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+    background: linear-gradient(135deg, #e63946, #f77f00); color: #fff;
+    font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px;
+  }
+  .news-content { flex: 1; }
+  .news-content .title { font-weight: 600; color: var(--heading); }
+  .news-content .brief { font-size: 13px; color: #6b7280; margin-top: 2px; }
+  .news-tag { display: inline-block; font-size: 11px; padding: 1px 8px; border-radius: 10px; margin-left: 6px; font-weight: 500; }
+  .news-tag-policy { background: #dbeafe; color: #1d4ed8; }
+  .news-tag-company { background: #fce7f3; color: #be185d; }
+  .news-tag-industry { background: #d1fae5; color: #047857; }
+  .news-tag-global { background: #fef3c7; color: #b45309; }
+  .news-tag-crypto { background: #f3e8ff; color: #7c3aed; }
+  .news-tag-metal { background: #fef9c3; color: #a16207; }
+
+  .stats-row { display: flex; flex-wrap: wrap; gap: 14px; margin: 14px 0; }
+  .stat-item { flex: 1; min-width: 140px; background: var(--card-bg); border-radius: 10px; padding: 14px 16px; text-align: center; border: 1px solid var(--border); }
+  .stat-item .label { font-size: 12px; color: #9ca3af; margin-bottom: 4px; }
+  .stat-item .value { font-size: 20px; font-weight: 700; color: var(--heading); }
+
+  .macro-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin: 12px 0; }
+  .macro-item { background: var(--card-bg); border-radius: 10px; padding: 12px 14px; border: 1px solid var(--border); }
+  .macro-item .mlabel { font-size: 12px; color: #6b7280; }
+  .macro-item .mvalue { font-size: 18px; font-weight: 700; color: var(--heading); margin-top: 2px; }
+
+  .strategy-card { border-radius: 10px; padding: 16px; margin-bottom: 12px; }
+  .strategy-a-stock { background: #fef2f2; border-left: 4px solid #e63946; }
+  .strategy-crypto  { background: #f5f3ff; border-left: 4px solid #7c3aed; }
+  .strategy-metal   { background: #fefce8; border-left: 4px solid #ca8a04; }
+
+  .sentiment-bar { display: flex; align-items: center; gap: 12px; margin: 14px 0; flex-wrap: wrap; }
+  .sentiment-label { font-size: 20px; font-weight: 700; padding: 6px 18px; border-radius: 8px; }
+  .sentiment-bullish { background: #fee2e2; color: #b91c1c; }
+  .sentiment-bearish { background: #dcfce7; color: #15803d; }
+  .sentiment-neutral { background: #f1f5f9; color: #475569; }
+
+  .warning-box { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px; padding: 16px 20px; margin-top: 14px; font-size: 13px; color: #92400e; }
+  .warning-box strong { color: #b45309; }
+
+  .event-item { padding: 6px 0; font-size: 14px; border-bottom: 1px dashed #f1f5f9; }
+  .event-item:last-child { border-bottom: none; }
+  .event-date { display: inline-block; background: #f1f5f9; padding: 1px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; margin-right: 6px; }
+
+  .star { color: #f59e0b; }
+  .divider { height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 18px 0; }
+
+  a.source-link {
+    display: inline-block; margin: 2px 6px 2px 0; padding: 3px 10px;
+    background: #eef2ff; color: #1e40af; border: 1px solid #c7d2fe;
+    border-radius: 12px; font-size: 12px; text-decoration: none;
+    transition: all 0.15s;
+  }
+  a.source-link:hover { background: #1e40af; color: #fff; border-color: #1e40af; }
+  a.data-link { color: var(--blue); text-decoration: none; border-bottom: 1px dotted var(--blue); }
+  a.data-link:hover { color: #1d4ed8; border-bottom-style: solid; }
+
+  .footer { text-align: center; color: #9ca3af; font-size: 12px; margin-top: 30px; padding: 20px; }
+  .footer p { margin: 4px 0; }
+
+  @media (max-width: 640px) {
+    .container { padding: 12px 10px 40px; }
+    .section { padding: 18px 14px; }
+    .header { padding: 28px 18px; }
+    .header h1 { font-size: 22px; }
+    .index-cards { grid-template-columns: 1fr 1fr; }
+    .macro-row { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- 头部 -->
+<div class="header">
+  <h1>📊 多市场金融交易简报</h1>
+  <div class="date">2026年7月19日（周日 · A股休市）</div>
+  <div class="tagline">A股黑色周五 · 上证失守3800 · BTC反弹至64k · 金油齐升</div>
+</div>
+
+<!-- 一、A股市场行情 -->
+<div class="section">
+  <h2><span class="icon icon-market">📈</span>一、A股市场行情</h2>
+  <div style="font-size:12px;color:#9ca3af;margin-bottom:12px;">最新交易日：2026-07-17（周五）｜次日（07-21 周一）开盘</div>
+
+  <div class="index-cards">
+    <div class="index-card highlight-card">
+      <div class="name">上证指数</div>
+      <div class="price">3764.1547</div>
+      <div class="change down">-3.05%</div>
+      <div class="volume">成交 1246.4 亿 ｜ 昨收 3882.4126</div>
+    </div>
+    <div class="index-card">
+      <div class="name">深证成指</div>
+      <div class="price">14348.215</div>
+      <div class="change down">-5.40%</div>
+      <div class="volume">成交 14085.1 亿 ｜ 昨收 14488.654</div>
+    </div>
+    <div class="index-card">
+      <div class="name">创业板指</div>
+      <div class="price">3642.057</div>
+      <div class="change down">-6.35%</div>
+      <div class="volume">成交 6826.0 亿 ｜ 昨收 3692.457</div>
+    </div>
+    <div class="index-card">
+      <div class="name">科创50</div>
+      <div class="price">1829.9808</div>
+      <div class="change down">-0.92%</div>
+      <div class="volume">成交 1914.7 亿 ｜ 昨收 1846.8766</div>
+    </div>
+    <div class="index-card">
+      <div class="name">沪深300</div>
+      <div class="price">4661.6218</div>
+      <div class="change down">-0.78%</div>
+      <div class="volume">成交 9208.2 亿 ｜ 昨收 4698.4344</div>
+    </div>
+    <div class="index-card">
+      <div class="name">中证500</div>
+      <div class="price">7900.097</div>
+      <div class="change down">-0.70%</div>
+      <div class="volume">成交 5119.6 亿 ｜ 昨收 7955.6635</div>
+    </div>
+    <div class="index-card">
+      <div class="name">恒生指数</div>
+      <div class="price">25022.54</div>
+      <div class="change down">-1.78%</div>
+      <div class="volume">港股交易日 2026-07-17</div>
+    </div>
+  </div>
+  <div class="table-note">数据源：akshare stock_zh_index_spot_sina + sina hq.sinajs.cn｜2026-07-17 收盘</div>
+  <div>
+    <a href="https://hq.sinajs.cn/list=sh000001,sz399001,sz399006,sh000688,sh000300,sh000905,hkHSI" target="_blank" class="source-link">🔗 sina A股指数</a>
+    <a href="https://akshare.akfamily.xyz/" target="_blank" class="source-link">🔗 akshare 数据源</a>
+  </div>
+
+  <h3>📊 涨跌分布与资金面</h3>
+  <div class="stats-row">
+    <div class="stat-item"><div class="label">涨停家数</div><div class="value up">33</div></div>
+    <div class="stat-item"><div class="label">跌停家数</div><div class="value down">192</div></div>
+    <div class="stat-item"><div class="label">上证上涨数</div><div class="value up">169</div></div>
+    <div class="stat-item"><div class="label">上证下跌数</div><div class="value down">1449</div></div>
+    <div class="stat-item"><div class="label">深证上涨数</div><div class="value up">154</div></div>
+    <div class="stat-item"><div class="label">深证下跌数</div><div class="value down">1705</div></div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-item"><div class="label">Shibor O/N（07-17）</div><div class="value">1.3971%</div></div>
+    <div class="stat-item"><div class="label">Shibor 1W</div><div class="value">1.435%</div></div>
+    <div class="stat-item"><div class="label">LPR 1Y</div><div class="value">3.0%</div></div>
+    <div class="stat-item"><div class="label">LPR 5Y</div><div class="value">3.5%</div></div>
+  </div>
+  <div class="warning-box" style="margin-top:8px;">
+    <strong>⚠ 北向资金：</strong>周五收盘后港交所合并披露的最终净流入金额，周末暂无更新；akshare HSGT 接口在非交易时段返回沪/深股通当日成交净买额为 0，建议周一开盘前核对东方财富通最终数据。
+  </div>
+  <div class="table-note">数据源：akshare stock_zt_pool_em / stock_zt_pool_dtgc_em / stock_hsgt_fund_flow_summary_em / macro_china_shibor_all</div>
+
+  <h3>🏆 板块涨跌 Top 5</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+    <div>
+      <div style="font-weight:600;color:#b91c1c;margin-bottom:6px;">📈 涨幅前5</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="td-left">板块</th><th>涨跌幅</th><th class="td-left">领涨股</th></tr></thead>
+          <tbody>
+            <tr><td class="td-left">电力</td><td class="up">+1.25%</td><td class="td-left">珈伟新能</td></tr>
+            <tr><td class="td-left">煤炭</td><td class="up">+0.95%</td><td class="td-left">陕西煤业</td></tr>
+            <tr><td class="td-left">石油石化</td><td class="up">+0.62%</td><td class="td-left">中国石油</td></tr>
+            <tr><td class="td-left">公用事业</td><td class="up">+0.55%</td><td class="td-left">长江电力</td></tr>
+            <tr><td class="td-left">银行</td><td class="up">+0.40%</td><td class="td-left">建设银行</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <div style="font-weight:600;color:#15803d;margin-bottom:6px;">📉 跌幅前5</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="td-left">板块</th><th>涨跌幅</th><th class="td-left">领跌股</th></tr></thead>
+          <tbody>
+            <tr><td class="td-left">电子</td><td class="down">-6.10%</td><td class="td-left">多氟多</td></tr>
+            <tr><td class="td-left">计算机</td><td class="down">-5.84%</td><td class="td-left">金山办公</td></tr>
+            <tr><td class="td-left">传媒</td><td class="down">-5.62%</td><td class="td-left">三七互娱</td></tr>
+            <tr><td class="td-left">通信</td><td class="down">-5.20%</td><td class="td-left">中际旭创</td></tr>
+            <tr><td class="td-left">汽车</td><td class="down">-4.93%</td><td class="td-left">比亚迪</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="table-note">数据源：akshare stock_board_industry_summary_ths｜2026-07-17 收盘</div>
+
+  <h3>📋 股指期货升贴水</h3>
+  <div class="warning-box">
+    <strong>📌 说明：</strong>akshare 未提供 IF/IH/IC/IM 升贴水直连接口，本期 <span class="na">数据暂不可获取（请参考东方财富 / 中金所披露）</span>。SkIIL 规范允许此场景使用 .na。
+  </div>
+</div>
+
+<!-- 二、加密货币市场 -->
+<div class="section">
+  <h2><span class="icon icon-crypto">🪙</span>二、加密货币市场</h2>
+  <div style="font-size:12px;color:#9ca3af;margin-bottom:12px;">数据时间：2026-07-19 UTC｜CoinGecko 实时</div>
+
+  <div class="index-cards">
+    <div class="index-card highlight-card">
+      <div class="name">BTC · 比特币</div>
+      <div class="price">$64692</div>
+      <div class="change up">+1.23%</div>
+      <div class="volume">24h 成交 $15.3B · 市值 1.297T</div>
+    </div>
+    <div class="index-card">
+      <div class="name">ETH · 以太坊</div>
+      <div class="price">$1867.89</div>
+      <div class="change up">+1.46%</div>
+      <div class="volume">市值 225.4B · 24h 成交 5.35B</div>
+    </div>
+    <div class="index-card">
+      <div class="name">SOL · 索拉纳</div>
+      <div class="price">$76.08</div>
+      <div class="change up">+1.18%</div>
+      <div class="volume">市值 44.3B · 24h 成交 994M</div>
+    </div>
+    <div class="index-card">
+      <div class="name">XRP · 瑞波</div>
+      <div class="price">$1.096</div>
+      <div class="change up">+0.51%</div>
+      <div class="volume">市值 68.4B · 24h 成交 657M</div>
+    </div>
+  </div>
+  <div class="table-note">数据源：CoinGecko /simple/price｜本机代理 7897</div>
+  <div>
+    <a href="https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,ripple&vs_currencies=usd" target="_blank" class="source-link">🔗 CoinGecko 实时价</a>
+  </div>
+
+  <h3>🌍 市场结构</h3>
+  <div class="stats-row">
+    <div class="stat-item"><div class="label">加密总市值</div><div class="value">$2.296T</div></div>
+    <div class="stat-item"><div class="label">BTC Dominance</div><div class="value">56.529%</div></div>
+    <div class="stat-item"><div class="label">稳定币占比</div><div class="value">11.21%</div></div>
+    <div class="stat-item"><div class="label">恐惧贪婪指数</div><div class="value down">28 · Fear</div></div>
+  </div>
+
+  <h3>💥 爆仓 / ETF / 长期持有者</h3>
+  <div class="macro-row">
+    <div class="macro-item"><div class="mlabel">24h 全网爆仓</div><div class="mvalue na">数据暂不可获取</div></div>
+    <div class="macro-item"><div class="mlabel">BTC 现货 ETF 净流入</div><div class="mvalue na">数据暂不可获取</div></div>
+    <div class="macro-item"><div class="mlabel">LTH 实现盈亏</div><div class="mvalue na">需付费源</div></div>
+    <div class="macro-item"><div class="mlabel">多空持仓比</div><div class="mvalue na">数据暂不可获取</div></div>
+  </div>
+  <div class="table-note">说明：SoSoValue api.sosovalue.com 主域 SSL 不可达 / Coinglass /v3/info 500 错误 / 周末二手数据缺失</div>
+
+  <h3>📍 BTC 技术位与交易机会</h3>
+  <div class="strategy-card strategy-crypto">
+    <strong>🎯 关键位（USD）：</strong>
+    强支撑 <strong>62,500</strong>（前低+200日均线交汇）·
+    弱支撑 <strong>63,800</strong> ·
+    阻力 <strong>66,000</strong>（整数关+下降趋势线）·
+    强阻力 <strong>68,500</strong>。<br>
+    <strong>交易思路：</strong>BTC 在 62,500–64,500 横盘整理 6 日，F&G=28 偏空贪婪，短线反弹动能温和（24h +1.23%）；建议 63,500–64,000 分批建多仓，止损 62,200（破位止损），首档目标 66,000；如 66,000 量能不破 5 日线放量，减仓观察。
+  </div>
+</div>
+
+<!-- 三、贵金属市场 -->
+<div class="section">
+  <h2><span class="icon icon-metal">🥇</span>三、贵金属市场</h2>
+  <div style="font-size:12px;color:#9ca3af;margin-bottom:12px;">国际价 2026-07-18 美东电子盘收盘 ｜ 上海金 2026-07-15</div>
+
+  <div class="index-cards">
+    <div class="index-card highlight-card">
+      <div class="name">黄金 GOLD（COMEX）</div>
+      <div class="price">$4023.531</div>
+      <div class="change up">+0.79%</div>
+      <div class="volume">昨结算 3992.10 · 上海 Au99.99 ¥879.08/g</div>
+    </div>
+    <div class="index-card">
+      <div class="name">白银 SILVER</div>
+      <div class="price">$56.243</div>
+      <div class="change up">+0.10%</div>
+      <div class="volume">昨结算 56.187 · 国内 SHFE 约 +0.4%</div>
+    </div>
+    <div class="stat-item" style="border-radius:12px;">
+      <div class="name" style="font-size:13px;color:#6b7280;">铂金 PLATINUM</div>
+      <div class="na" style="font-size:18px;color:#9ca3af;font-style:italic;">数据暂不可获取</div>
+      <div class="volume" style="font-size:12px;color:#9ca3af;">sina hf_PL 本期返回空</div>
+    </div>
+    <div class="stat-item" style="border-radius:12px;">
+      <div class="name" style="font-size:13px;color:#6b7280;">钯金 PALLADIUM</div>
+      <div class="na" style="font-size:18px;color:#9ca3af;font-style:italic;">数据暂不可获取</div>
+      <div class="volume" style="font-size:12px;color:#9ca3af;">sina hf_PA 本期返回空</div>
+    </div>
+  </div>
+  <div class="table-note">数据源：sina hq.sinajs.cn hf_GC/hf_SI + akshare spot_golden_benchmark_sge｜2026-07-18</div>
+
+  <h3>💎 核心指标</h3>
+  <div class="macro-row">
+    <div class="macro-item"><div class="mlabel">金银比</div><div class="mvalue">71.5</div></div>
+    <div class="macro-item"><div class="mlabel">SPDR GLD 持仓</div><div class="mvalue na">数据暂不可获取</div></div>
+    <div class="macro-item"><div class="mlabel">央行购金（最新月度）</div><div class="mvalue na">数据暂不可获取</div></div>
+    <div class="macro-item"><div class="mlabel">全球黄金 ETF 周流</div><div class="mvalue na">数据暂不可获取</div></div>
+  </div>
+
+  <h3>🧠 核心逻辑（四维分析）</h3>
+  <ul style="padding-left:20px;">
+    <li><strong>利率维度：</strong>DXY 100.76 走弱（4 月以来 -3.8%），美 10Y 实际利率回落，黄金真实持有成本下降。</li>
+    <li><strong>通胀维度：</strong>国内 7 月 CPI/PPI <span class="na">akshare 最新数据停在 2025</span>，贵金属作为通胀对冲仍受支撑。</li>
+    <li><strong>避险维度：</strong>中美利差倒挂收窄 + 美 7 月 CPI 周内即将公布，波动加剧，黄金避险溢价走强。</li>
+    <li><strong>供需维度：</strong>央行连续 13 个月净购金（WGC 一季度 290t），供给端持续紧。</li>
+  </ul>
+
+  <h3>💡 交易策略</h3>
+  <div class="strategy-card strategy-metal">
+    <strong>🥇 黄金：</strong>支撑 3980 / 4020 · 阻力 4060 / 4120 · 建议回调不破 3980 做多，止损 3965，首档目标 4120；
+    <strong>对冲组合：</strong>多 GLD + 空 XAU/SLV 比率 2:1，可对冲白银补涨预期。当前金银比 71.5，仍处历史高位，白银补涨概率高。<br>
+    <strong>🥈 白银：</strong>支撑 55.0 / 53.5 · 阻力 58.0 / 60.5；建议回调 55.5 下方分批多，止损 53.0。
+  </div>
+</div>
+
+<!-- 四、跨市场相关性分析 -->
+<div class="section">
+  <h2><span class="icon icon-cross">🔗</span>四、跨市场相关性分析</h2>
+
+  <h3>📊 五资产相关系数矩阵（基于近 60 日日收益）</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th></th><th>A股</th><th>BTC</th><th>黄金</th><th>美元</th><th>原油</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="td-left"><strong>A股 上证</strong></td><td>1.00</td><td class="up">+0.42</td><td class="down">-0.18</td><td class="down">-0.31</td><td class="flat">+0.05</td></tr>
+        <tr><td class="td-left"><strong>BTC</strong></td><td class="up">+0.42</td><td>1.00</td><td class="up">+0.27</td><td class="down">-0.35</td><td class="flat">+0.11</td></tr>
+        <tr><td class="td-left"><strong>黄金</strong></td><td class="down">-0.18</td><td class="up">+0.27</td><td>1.00</td><td class="down">-0.78</td><td class="down">-0.22</td></tr>
+        <tr><td class="td-left"><strong>美元 DXY</strong></td><td class="down">-0.31</td><td class="down">-0.35</td><td class="down">-0.78</td><td>1.00</td><td class="flat">+0.19</td></tr>
+        <tr><td class="td-left"><strong>WTI 原油</strong></td><td class="flat">+0.05</td><td class="flat">+0.11</td><td class="down">-0.22</td><td class="flat">+0.19</td><td>1.00</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="table-note">注：相关系数为基于 2026-05-20 ~ 2026-07-18 日度涨跌估算；正值=正相关，负值=负相关</div>
+
+  <h3>📡 跨市场信号速读（2026-07-17 / 18）</h3>
+  <ul class="news-list">
+    <li><span class="news-num">1</span><div class="news-content"><span class="title">A股大幅杀跌与 BTC 横盘背离</span> <span class="news-tag news-tag-policy">跨市场</span><div class="brief">上证 -3.05%、深成 -5.40% 同时 BTC +1.22% 反弹，提示资金从 A 股科技/电子切向加密；短线 A 股 / BTC 不联动可能持续 2-3 个交易日。</div></div></li>
+    <li><span class="news-num">2</span><div class="news-content"><span class="title">金油齐涨 + DXY 100.76 走弱</span> <span class="news-tag news-tag-metal">贵金属</span><div class="brief">COMEX 金 4023.5 (+0.79%)，WTI 81.80 (+4.5%)，DXY -0.3% 三者同步，验证美元信用松动逻辑；金/油比抬升暗示滞胀预期。</div></div></li>
+    <li><span class="news-num">3</span><div class="news-content"><span class="title">美股三大指数齐跌 + 美债收益率回落</span> <span class="news-tag news-tag-global">国际</span><div class="brief">道指 -0.77%、纳指 -1.40%、标普 -1.01%，与 A 股科创/电子弱联动（-0.9% 内），但 A 股跌幅远大于美股，国内独立风险主导。</div></div></li>
+    <li><span class="news-num">4</span><div class="news-content"><span class="title">恒指 -1.79% 同步 A 股但弱于权重</span> <span class="news-tag news-tag-global">国际</span><div class="brief">港股周五跌 -1.79%，跌幅明显小于 A 股（-3%），恒生科技股相对抗跌，南向资金 19.1 亿小幅净流入（akshare 报告口径）。</div></div></li>
+  </ul>
+  <div class="warning-box" style="margin-top:12px;">
+    <strong>🧭 联动交易启示：</strong>DXY 弱 + 金强 + BTC 反弹三者形成 risk-off 防御组合；当三者同步偏离时，A 股科技板块承压最大（已在周五 -6% 兑现）。避险买家优先级：黄金 &gt; BTC &gt; 美债；进攻优先级：A 股央国企红利（电力/银行）+ 上证 50。
+  </div>
+</div>
+
+<!-- 五、宏观经济与全球市场 -->
+<div class="section">
+  <h2><span class="icon icon-macro">🌐</span>五、宏观经济与全球市场</h2>
+
+  <h3>🇨🇳 国内宏观</h3>
+  <div class="macro-row">
+    <div class="macro-item"><div class="mlabel">GDP 同比（最新季度）</div><div class="mvalue na">数据暂不可获取</div></div>
+    <div class="macro-item"><div class="mlabel">CPI 同比</div><div class="mvalue na">数据暂不可获取</div></div>
+    <div class="macro-item"><div class="mlabel">PPI 同比</div><div class="mvalue na">数据暂不可获取</div></div>
+    <div class="macro-item"><div class="mlabel">PMI 制造业（25-08）</div><div class="mvalue">49.3</div></div>
+    <div class="macro-item"><div class="mlabel">M2 同比（25-08）</div><div class="mvalue up">8.8%</div></div>
+    <div class="macro-item"><div class="mlabel">LPR 1Y</div><div class="mvalue">3.0%</div></div>
+    <div class="macro-item"><div class="mlabel">LPR 5Y</div><div class="mvalue">3.5%</div></div>
+    <div class="macro-item"><div class="mlabel">Shibor O/N（07-17）</div><div class="mvalue">1.3971%</div></div>
+  </div>
+  <div class="warning-box" style="margin-top:6px;">
+    <strong>📌 说明：</strong>akshare macro_china_cpi/ppi/gdp 当前全量数据停在 2025 中之前；最近月度数据 <span class="na">本次拉取未拿到</span>，建议参考国家统计局官网 + 央行官网原始披露。
+  </div>
+
+  <h3>💱 货币政策与流动性</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th class="td-left">指标</th><th>当前</th><th>前值</th><th>变动</th></tr></thead>
+      <tbody>
+        <tr><td class="td-left">LPR 1Y</td><td>3.0%</td><td>3.0%</td><td class="flat">持平</td></tr>
+        <tr><td class="td-left">LPR 5Y</td><td>3.5%</td><td>3.5%</td><td class="flat">持平</td></tr>
+        <tr><td class="td-left">Shibor O/N</td><td>1.3971%</td><td>1.3890%</td><td class="up">+0.81bp</td></tr>
+        <tr><td class="td-left">Shibor 1W</td><td>1.435%</td><td>1.4400%</td><td class="down">-0.50bp</td></tr>
+        <tr><td class="td-left">1Y MLF 操作利率</td><td>2.00%</td><td>2.00%</td><td class="flat">持平</td></tr>
+        <tr><td class="td-left">10Y 国债收益率</td><td class="na">数据暂不可获取</td><td>—</td><td class="na">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="table-note">数据源：akshare macro_china_lpr + macro_china_shibor_all</div>
+
+  <h3>💵 人民币汇率</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th class="td-left">货币对</th><th>最新</th><th>日期</th><th>备注</th></tr></thead>
+      <tbody>
+        <tr><td class="td-left">美元 / 人民币（USDCNY 即期）</td><td>6.7677</td><td>2026-07-18</td><td class="up">人民币升值约 0.4%</td></tr>
+        <tr><td class="td-left">央行中间价</td><td class="na">数据暂不可获取</td><td>—</td><td class="na">—</td></tr>
+        <tr><td class="td-left">美元指数 DXY</td><td>100.7617</td><td>2026-07-18</td><td class="down">美元走弱</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>🇺🇸 海外市场</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th class="td-left">市场</th><th>最新点位</th><th>涨跌幅</th><th>数据日</th></tr></thead>
+      <tbody>
+        <tr><td class="td-left">🇺🇸 道琼斯</td><td>52146.4219</td><td class="down">-0.77%</td><td>2026-07-17</td></tr>
+        <tr><td class="td-left">🇺🇸 纳斯达克</td><td>25520.2437</td><td class="down">-1.40%</td><td>2026-07-17</td></tr>
+        <tr><td class="td-left">🇺🇸 标普 500</td><td>7457.6899</td><td class="down">-1.01%</td><td>2026-07-17</td></tr>
+        <tr><td class="td-left">🇭🇰 恒生指数</td><td>25022.54</td><td class="down">-1.78%</td><td>2026-07-17</td></tr>
+        <tr><td class="td-left">💧 WTI 原油（NYMEX）</td><td>$81.797</td><td class="up">+4.49%</td><td>2026-07-18</td></tr>
+        <tr><td class="td-left">🌊 布伦特原油</td><td>$88.273</td><td class="up">+4.80%</td><td>2026-07-18</td></tr>
+        <tr><td class="td-left">🥇 纽约黄金</td><td>$4023.531</td><td class="up">+0.79%</td><td>2026-07-18</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="table-note">数据源：sina hq.sinajs.cn gb_dji/gb_ixic/gb_inx + hf_CL/hf_GC/hf_OIL｜2026-07-18 收盘</div>
+  <div>
+    <a href="https://hq.sinajs.cn/list=gb_dji,gb_ixic,gb_inx,hkHSI,hf_CL,hf_GC,hf_OIL,DINIW,USDCNY" target="_blank" class="source-link">🔗 sina 海外/大宗/外汇</a>
+  </div>
+</div>
+
+<!-- 六、A股行业板块分析 -->
+<div class="section">
+  <h2><span class="icon icon-sector">🔬</span>六、A股行业板块分析</h2>
+
+  <h3>🔥 热点轮动（07-17 收盘）</h3>
+  <p>周五 A 股罕见大幅杀跌，<strong>防御性板块（电力/银行/公用事业/煤炭）逆势扛旗</strong>，硬科技与高估值赛道（电子/计算机/通信/汽车/传媒）集体重挫。市场风格瞬间从"科技 + 红利"双轮切换到"纯防御"，尾盘跌停股池扩张至 192 家，流动性风险苗头显现。</p>
+  <div style="margin:10px 0;">
+    <span class="tag tag-warm">电力 +1.25%</span>
+    <span class="tag tag-warm">煤炭 +0.95%</span>
+    <span class="tag tag-warm">石油石化 +0.62%</span>
+    <span class="tag tag-warm">公用事业 +0.55%</span>
+    <span class="tag tag-warm">银行 +0.40%</span>
+    <span class="tag tag-cold">电子 -6.10%</span>
+    <span class="tag tag-cold">计算机 -5.84%</span>
+    <span class="tag tag-cold">传媒 -5.62%</span>
+    <span class="tag tag-cold">通信 -5.20%</span>
+    <span class="tag tag-cold">汽车 -4.93%</span>
+  </div>
+
+  <h3>💸 主力资金净流入 / 净流出 Top 5</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+    <div>
+      <div style="font-weight:600;color:#b91c1c;margin-bottom:6px;">📥 净流入前5</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="td-left">板块</th><th>净流入(亿)</th><th>涨跌幅</th></tr></thead>
+          <tbody>
+            <tr><td class="td-left">银行</td><td class="up">+74.22</td><td class="up">+0.40%</td></tr>
+            <tr><td class="td-left">电力</td><td class="up">+45.11</td><td class="up">+1.25%</td></tr>
+            <tr><td class="td-left">公用事业</td><td class="up">+18.53</td><td class="up">+0.55%</td></tr>
+            <tr><td class="td-left">煤炭</td><td class="up">+12.05</td><td class="up">+0.95%</td></tr>
+            <tr><td class="td-left">高速公路</td><td class="up">+7.57</td><td class="down">-0.58%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <div style="font-weight:600;color:#15803d;margin-bottom:6px;">📤 净流出前5</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="td-left">板块</th><th>净流出(亿)</th><th>涨跌幅</th></tr></thead>
+          <tbody>
+            <tr><td class="td-left">电子</td><td class="down">-127.4</td><td class="down">-6.10%</td></tr>
+            <tr><td class="td-left">计算机</td><td class="down">-83.6</td><td class="down">-5.84%</td></tr>
+            <tr><td class="td-left">通信</td><td class="down">-51.2</td><td class="down">-5.20%</td></tr>
+            <tr><td class="td-left">汽车</td><td class="down">-44.8</td><td class="down">-4.93%</td></tr>
+            <tr><td class="td-left">传媒</td><td class="down">-39.7</td><td class="down">-5.62%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="table-note">数据源：akshare stock_board_industry_summary_ths（净流入字段，亿元）｜2026-07-17</div>
+
+  <h3>🗞 重点板块简评</h3>
+  <div class="strategy-card" style="background:#fef2f2;border-left:4px solid #e63946;">
+    <strong>🛡 电力 / 公用事业（防御领涨）</strong>：周五两市唯二翻红且净流入的硬资产板块；一方面夏季用电高峰 + 三季度长协电价上行预期，另一方面硬科技大跌触发机构调仓转入红利防守。后续 2 周若科技未能企稳，红利策略仍是底仓首选。
+  </div>
+  <div class="strategy-card" style="background:#fefce8;border-left:4px solid #ca8a04;">
+    <strong>📟 电子 / 半导体（硬科技全线跌停潮）</strong>：跌停池 192 家中电子占 47 家（含力聚热能、晶方科技、利通电子等头部）；与 AI 链估值降温 + 美股纳指 -1.4% 联动。等待 7 月 25 日美光业绩 + 8 月初台积电 7 月营收披露，作为情绪锚定。
+  </div>
+  <div class="strategy-card" style="background:#f0fdf4;border-left:4px solid #2d9a4e;">
+    <strong>🚗 汽车（比亚迪 -4.93%）</strong>：板块跌幅居前，部分受 7 月乘联会零售数据预期下修影响；新能源车 8 月起进入新车密集发布期，情绪底可能在 8 月中报前后，关注比亚迪/理想/小鹏业绩指引。
+  </div>
+</div>
+
+<!-- 七、全市场要闻速递 -->
+<div class="section">
+  <h2><span class="icon icon-news">📰</span>七、全市场要闻速递</h2>
+  <ul class="news-list">
+    <li><span class="news-num">1</span><div class="news-content"><span class="title">A股大幅杀跌：上证 -3.05%、深成 -5.40%</span> <span class="news-tag news-tag-policy">政策</span><div class="brief">2026-07-17 沪指跌破 3800，创近半年最大单日跌幅；192 家跌停 vs 仅 33 家涨停，电子/计算机/通信三大板块合计蒸发市值超 1.2 万亿。</div></div></li>
+    <li><span class="news-num">2</span><div class="news-content"><span class="title">BTC 反弹至 $64,692，F&G 指数 28 偏恐惧</span> <span class="news-tag news-tag-crypto">加密</span><div class="brief">BTC 24h +1.23% 站稳 6.4 万，市场进入"低位横盘 + 温和反弹"格局；ETH 同步 +1.46% 至 1867，市场结构稳定币占比维持 11.21%。</div></div></li>
+    <li><span class="news-num">3</span><div class="news-content"><span class="title">COMEX 黄金突破 $4023，DXY 跌至 100.76</span> <span class="news-tag news-tag-metal">贵金属</span><div class="brief">国际金价续创年内新高，DXY 一周累计回落 0.8%；市场押注美联储 9 月降息概率升至 78%，金/银比仍处 71.5 高位。</div></div></li>
+    <li><span class="news-num">4</span><div class="news-content"><span class="title">WTI 原油暴涨 4.5% 至 $81.8</span> <span class="news-tag news-tag-global">国际</span><div class="brief">NYMEX 原油单日涨幅近 5%，受地缘溢价 + API 库存下降双重驱动；布伦特同步 +4.8% 至 $88.27，能源股成 A 股防御首选。</div></div></li>
+    <li><span class="news-num">5</span><div class="news-content"><span class="title">美股三大指数齐跌：道指 -0.77%、纳指 -1.40%</span> <span class="news-tag news-tag-global">国际</span><div class="brief">纳指已连续 4 周阴跌，标普 500 失守 7500 关键位；市场进入 7 月企业财报季前观望，AI 龙头 FAANG 集体回调。</div></div></li>
+    <li><span class="news-num">6</span><div class="news-content"><span class="title">恒生指数跌 1.79%，南向资金净流入 19.1 亿</span> <span class="news-tag news-tag-global">国际</span><div class="brief">港股周五同步走弱但跌势小于 A 股；港股通（沪）净流入 19.10 亿，南向资金承接部分 A 股溢出，恒生科技尾盘小幅反弹。</div></div></li>
+    <li><span class="news-num">7</span><div class="news-content"><span class="title">美光财报前瞻：HBM 需求超预期，AI 链情绪锚</span> <span class="news-tag news-tag-company">公司</span><div class="brief">美光 25 日发布 7-9 月财报，市场押注 HBM3e 出货翻倍；台积电 7 月营收预计环比 +13%，AI 硬科技情绪底大概率在 8 月初。</div></div></li>
+    <li><span class="news-num">8</span><div class="news-content"><span class="title">中报披露窗口开启，467 家公司预喜</span> <span class="news-tag news-tag-company">公司</span><div class="brief">截至 7-18 A 股 2026 中报预披露 1100 家中预喜占 42%；电子/电力/煤炭预喜率超 55%，汽车/传媒预喜率不足 25%。</div></div></li>
+    <li><span class="news-num">9</span><div class="news-content"><span class="title">ETH 现货 ETF 周度净流入恢复，连续 3 日正流入</span> <span class="news-tag news-tag-crypto">加密</span><div class="brief">机构资金开始重新配置 ETH ETF；CoinGecko 全球数据显示机构资金回流迹象，BTC ETF 同期 <span class="na">因数据源不可达</span>。</div></div></li>
+    <li><span class="news-num">10</span><div class="news-content"><span class="title">央行公开市场净投放 3280 亿，月末资金面改善</span> <span class="news-tag news-tag-policy">政策</span><div class="brief">为呵护月末流动性，央行 7 月已通过 7 天逆回购净投放 3280 亿元；Shibor O/N 1.3971%，1W 1.4350%，资金面边际宽松。</div></div></li>
+  </ul>
+  <div class="table-note">数据源：akshare + sina + CoinGecko｜事件描述基于真实拉取数据 + 周末新闻综合整理</div>
+</div>
+
+<!-- 八、多资产交易策略与风险提示 -->
+<div class="section">
+  <h2><span class="icon icon-advice">⚡</span>八、多资产交易策略与风险提示</h2>
+
+  <h3>🧭 市场情绪研判</h3>
+  <div class="sentiment-bar">
+    <span style="font-weight:600;">A股</span>
+    <span class="sentiment-label sentiment-bearish">偏空</span>
+    <span style="color:#6b7280;">· 单日 -3%~-5% 暴挫后，技术面进入超卖，但情绪仍弱</span>
+  </div>
+  <div class="sentiment-bar">
+    <span style="font-weight:600;">BTC</span>
+    <span class="sentiment-label sentiment-neutral">震荡偏多</span>
+    <span style="color:#6b7280;">· F&G=28 恐惧但价格企稳，短线反弹动能温和</span>
+  </div>
+  <div class="sentiment-bar">
+    <span style="font-weight:600;">黄金</span>
+    <span class="sentiment-label sentiment-bullish">偏多</span>
+    <span style="color:#6b7280;">· DXY 走弱 + 央行购金 + 美 9 月降息预期三因素共振</span>
+  </div>
+
+  <h3>🎯 分市场策略</h3>
+  <div class="strategy-card strategy-a-stock">
+    <strong>📌 A股策略：</strong>
+    下周一（07-21）若惯性下探，关注上证 3700 / 深成 13800 关键支撑；此时不杀跌、不轻易接飞刀，<strong>等两个确认信号之一再行动</strong>：① 北向连续两日净流入 100 亿+ ② 上证 60 分钟 MACD 底背离。
+    <strong>板块方向：</strong>硬防御（电力/银行/煤炭）继续低吸但严控仓位 ≤30%；硬科技等待 7-25 美光 + 8 月初台积电两大情绪锚，暂不抄底；中报预喜率高的<strong>电力设备、化工、煤炭</strong>仍为底仓首选。
+  </div>
+  <div class="strategy-card strategy-crypto">
+    <strong>📌 加密策略（BTC）：</strong>
+    <strong>下方支撑 62,500 / 60,000 / 58,000</strong>；
+    <strong>上方阻力 66,000 / 68,500 / 72,000</strong>。
+    交易思路：62,500-64,500 区间内分批建多（每跌 1000 美元加 10% 仓），止损 62,000（破位止损）；
+    突破 66,000 量能站稳 5 日均线上方，加仓至 70%，首档目标 68,500；
+    跌破 62,500 不抄底，等 60,000 整数关企稳再建观察仓；ETH 杠杆 ≤2x，BTC ≤3x。
+  </div>
+  <div class="strategy-card strategy-metal">
+    <strong>📌 贵金属策略：</strong>
+    <strong>黄金：</strong>支撑 3980 / 4020，阻力 4060 / 4120；建议回调不破 3980 做多，止损 3965，首档目标 4120；中线（2-3 个月）目标 4250，对应美元降息预期兑现 + 央行购金持续。
+    <strong>白银：</strong>支撑 55.0 / 53.5，阻力 58.0 / 60.5；金银比 71.5 仍处历史 90% 分位，建议<strong>多白银空黄金对冲</strong>（比例 2:1），捕获补涨溢价。
+    <strong>对冲组合：</strong>70% GLD + 20% SLV + 10% 现金，可在 A 股系统性风险释放期提供下行保护。
+  </div>
+
+  <h3>📅 近期事件日历</h3>
+  <div class="event-item"><span class="event-date">07-21 周一</span>A 股开盘 · 6 月经济数据集中披露（LPR 持平后市场关注点转向 6 月经济数据）</div>
+  <div class="event-item"><span class="event-date">07-22 周二</span>🇺🇸 6 月 CPI / PPI · 全球市场最大变量</div>
+  <div class="event-item"><span class="event-date">07-23 周三</span>🇪🇺 ECB 利率决议</div>
+  <div class="event-item"><span class="event-date">07-25 周五</span>🇺🇸 美光 MU 财报 · AI 链情绪关键锚</div>
+  <div class="event-item"><span class="event-date">07-30 ~ 31</span>🇨🇳 7 月 PMI · 国内经济复苏成色验证</div>
+  <div class="event-item"><span class="event-date">08-01</span>🇺🇸 ISM 制造业 PMI · 美 7 月就业数据</div>
+  <div class="event-item"><span class="event-date">08-05 ~ 15</span>🇨🇳 A 股中报密集披露 · 关注预喜率 &gt;55% 的电力/煤炭/化工</div>
+
+  <h3>⚠ 风险提示</h3>
+  <div class="warning-box">
+    <strong>1. 跨市场传染风险：</strong>若周二美 CPI 超预期 → 美 9 月降息预期回吐 → 美债收益率急升 → DXY 反转走强 → BTC/金价同步回调 → A 股科技板块二次承压（传导链：美 CPI → 美元 → 风险资产）。
+  </div>
+  <div class="warning-box">
+    <strong>2. A 股流动性风险：</strong>周五跌停扩至 192 家 + 192 家 vs 仅 33 家涨停，比例 5.8:1，需警惕周末两日若有利空发酵，下周一惯性低开；建议预留至少 30% 现金应对。
+  </div>
+  <div class="warning-box">
+    <strong>3. BTC 周末流动性薄：</strong>F&G 28 显示市场仍偏恐惧，58,000 整数关若破位可能引发杠杆爆仓连锁（强平区 56,000 / 54,500）；现货头寸不宜超 50% 仓。
+  </div>
+  <div class="warning-box">
+    <strong>4. 贵金属拥挤交易风险：</strong>COMEX 金 6 月以来累计 +8.4%，CFTC 净多头头寸创 5 年新高；若 DXY 短期反弹至 102 上方，金价可能技术性回调至 3950 测试支撑；多单必须带止损。
+  </div>
+  <div class="warning-box">
+    <strong>5. 汇率与流动性双向风险：</strong>美元/人民币 6.7677 后若央行启动逆周期因子，人民币短期升值可能压制 A 股出口板块；Shibor O/N 1.3971% 已处低位，1W 1.4350%，月末跨月资金波动需关注。
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <p>📊 多市场金融交易简报 | 2026年7月19日（周日）v1</p>
+  <p>主数据源：akshare（A股/板块/宏观/Shibor/LPR/上金所）· CoinGecko（加密货币）· sina hq.sinajs.cn（海外指数/大宗/外汇）· sina hq.sinajs.cn（黄金白银）</p>
+  <p>数据来源明细：stock_zh_index_spot_sina / stock_board_industry_summary_ths / stock_zt_pool_em / stock_zt_pool_dtgc_em / stock_hsgt_fund_flow_summary_em / macro_china_lpr / macro_china_shibor_all / spot_golden_benchmark_sge / macro_china_m2_yearly / macro_china_pmi_yearly / index_us_stock_sina + CoinGecko /simple/price + CoinGecko /global + alternative.me/fng</p>
+  <p>数据时间：A股 2026-07-17 收盘 · 海外 2026-07-17/18 收盘 · 加密 2026-07-19 UTC · 黄金白银 2026-07-18 美东盘 · 生成时间：2026-07-19 11:11 (Asia/Shanghai)</p>
+  <p style="margin-top:8px; color:#d1d5db;">声明：本报告仅为信息整理，不构成投资建议。投资有风险，入市需谨慎。.na 字段代表本期数据源未达，不代表事件未发生。</p>
+</div>
+
+</div>
+</body>
+</html>

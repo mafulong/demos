@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>闪电贷套利 on Demos</title><link>/demos/docs/flash-loan/</link><description>Recent content in 闪电贷套利 on Demos</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Sun, 19 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="/demos/docs/flash-loan/index.xml" rel="self" type="application/rss+xml"/><item><title>Aave V3 闪电贷套利流程</title><link>/demos/docs/flash-loan/2026-07-19-aave-v3-arbitrage-flow/</link><pubDate>Sun, 19 Jul 2026 00:00:00 +0000</pubDate><guid>/demos/docs/flash-loan/2026-07-19-aave-v3-arbitrage-flow/</guid><description>&lt;h2 id="流程"&gt;流程&lt;a class="anchor" href="#%e6%b5%81%e7%a8%8b"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;一笔套利 tx 的结构（Aave V3 闪电贷为例）：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;1. 从 Aave V3 Pool flashLoanSimple 借 1,000,000 USDC
+2. 在 Uniswap V3 用 USDC 买 ETH（假设价格低）
+3. 在 SushiSwap 卖 ETH 换 USDC（假设价格高）
+4. Aave V3 Pool 归还 1,000,000 USDC + 5 bps 利息（500 USDC）
+5. 利润留在合约 wallet&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;任何步骤失败 → 整个 tx revert → 不亏 gas。&lt;/p&gt;
+&lt;h2 id="foundry-测试"&gt;Foundry 测试&lt;a class="anchor" href="#foundry-%e6%b5%8b%e8%af%95"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-solidity" data-lang="solidity"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;contract&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;ArbTest&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;is&lt;/span&gt; Test {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;function&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;testArb&lt;/span&gt;() &lt;span style="color:#66d9ef"&gt;public&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// fork mainnet at block N
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; vm.createSelectFork(&lt;span style="color:#e6db74"&gt;&amp;#34;mainnet&amp;#34;&lt;/span&gt;, BLOCK);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// execute
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;uint&lt;/span&gt; profit &lt;span style="color:#f92672"&gt;=&lt;/span&gt; arb.execute(USDC, &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;_000_000e6, uniPath, sushiPath);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; assertGt(profit, &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="上主网-checklist"&gt;上主网 checklist&lt;a class="anchor" href="#%e4%b8%8a%e4%b8%bb%e7%bd%91-checklist"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Gas 预算&lt;/strong&gt;：单笔 ≤ 0.02 ETH（gas limit ~500k, gas price 30 gwei）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MEV-Boost&lt;/strong&gt;：用 Flashbots private mempool，避免被 sandwich&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;失败回滚预算&lt;/strong&gt;：单日最多 5 次失败，超出走人&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Profit threshold&lt;/strong&gt;：每笔至少 50 USD 利润才发（gas 摊销）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="风险"&gt;风险&lt;a class="anchor" href="#%e9%a3%8e%e9%99%a9"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;竞争激烈&lt;/strong&gt;：机会窗口 &amp;lt; 100ms，bot 比拼速度&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MevBlock / 私有池&lt;/strong&gt;：不加 private mempool 等于送钱&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Aave 利率&lt;/strong&gt;：极端行情下 aToken 利率变负，借贷成本上升&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;合约升级风险&lt;/strong&gt;：Aave V3 治理变更可能影响闪电贷接口&lt;/li&gt;
+&lt;/ol&gt;</description></item></channel></rss>
