@@ -4,6 +4,30 @@ weight: 5
 bookCollapseSection: true
 ---
 
-不同 CEX 之间的价差套利（搬砖）。
+**原理**：同一个币在 A 所和 B 所价格不一致（一般因流动性、用户群体、监管），在便宜所买入、贵所卖出，赚价差。
 
-- [跨交易所套利 概览](2026-07-18-overview/)
+**现实**：
+- 提币延迟（5-30 分钟）让大多数 CEX-CEX 现货套利已被机构吃光
+- 永续跨所套利（不涉及提币，只调仓）仍然有空间，但 funding rate 套利更稳
+- 主要难点：两边同时下单的延迟差、提币网络拥堵、被风控
+
+## 推荐
+
+| Repo | ★ | 说明 |
+|------|---|------|
+| [nelso0/barbotine-arbitrage-bot](https://github.com/nelso0/barbotine-arbitrage-bot) | 639 | **首选**。CCXT-based，纯 Python，CEX 全套，文档好 |
+| [your-quantguy/cross-exchange-arbitrage](https://github.com/your-quantguy/cross-exchange-arbitrage) | 119 | 期货跨所框架 |
+| [bigmacman1129/crypto-arbitrage](https://github.com/bigmacman1129/crypto-arbitrage) | 103 | 三角 + 跨所 |
+| [notlelouch/ArbiBot](https://github.com/notlelouch/ArbiBot) | 32 | Go 写，WebSocket 实时 |
+| [Mohamed1756/Crypto-Liquidation-Feed](https://github.com/Mohamed1756/Crypto-Liquidation-Feed) | 25 | 爆仓流监控，间接套利信号 |
+
+## 关键考虑
+
+1. **提币 vs 内部划转**：内部划转（同交易所集团如 OKX 旗下多站）可秒到，跨集团需提币
+2. **两边余额管理**：要在 A、B 两所都常驻资金，否则单边余额耗尽后失效
+3. **风控 / KYC**：频繁跨所大额转账可能触发风控或 AML 调查
+4. **替代：永续跨所套利**（funding rate，见 [Funding Rate 套利](../funding-rate/)）更适合个人玩家
+
+## 该主题文章
+
+- [Binance ↔ OKX 资金费率套利实操](2026-07-19-binance-okx-funding-arb/)

@@ -4,6 +4,62 @@ weight: 9
 bookCollapseSection: true
 ---
 
-基于 EVM 原子交易的零本金套利。
+---
 
-- [闪电贷套利 概览](2026-07-18-overview/)
+
+**原理**：EVM 链上原子交易特性 — 一个 transaction 内可以借、用、还，如果最终没还上，整个 transaction 回滚（revert），相当于"白嫖"失败不花钱。所以可以 **0 本金** 借出数百万美金，套利成功后立刻归还 + 利息。
+
+主要使用场景：
+- DEX-DEX 套利（Uniswap ↔ SushiSwap）
+- 清算（lending protocol 抵押不足时清算拿奖励）
+- 抵押品置换（Aave collateral swap）
+
+## 推荐
+
+| Repo | ★ | 说明 |
+|------|---|------|
+| [johngrantuk/aaveFlashLoan](https://github.com/johngrantuk/aaveFlashLoan) | 742 | **Aave V1 Flashloan Hackathon 第一名**，适合学习 |
+| [AleRapchan/flash-swap-arbitrage-bot](https://github.com/AleRapchan/flash-swap-arbitrage-bot) | 241 | 以太坊主网监控套利 |
+| [whisdev/flash-loan-trading-bot](https://github.com/whisdev/flash-loan-trading-bot) | 102 | Uniswap + Camelot + 第三个 DEX |
+| [haydenshively/Nantucket](https://github.com/haydenshively/Nantucket) | 198 | Compound 清算 bot |
+
+## 主流闪电贷来源
+
+| 协议 | 链 | 利率 |
+|------|----|------|
+| Aave V3 | 多链 | 0%（大部分情况） |
+| dYdX | Solo / StarkNet | 0%（旧版） |
+| Uniswap V2/V3 | 多链 | 0%（用 swap 借） |
+| Balancer | 多链 | 0%（用 flash swap） |
+| Maker | Ethereum | 0%（flash mint DAI） |
+
+## 一笔套利 tx 的结构
+
+```
+1. flash loan 借 1,000,000 USDC
+2. 在 Uniswap 用 USDC 买 ETH（价格低）
+3. 在 SushiSwap 卖 ETH 换 USDC（价格高）
+4. 归还 1,000,000 USDC + 利息（0 或 几美金）
+5. 利润留在 wallet
+```
+
+如果任何步骤失败（revert），全部回滚，不亏 gas。
+
+## 关键风险
+
+1. **Gas 失败**：套利失败 revert 仍要付 gas（高峰期几十美金）
+2. **竞争激烈**：同一机会窗口 < 100ms，被 sandwich bot 抢单
+3. **MEV-Boost / 私有内存池**：直接和 validator 通信，绕开 public mempool
+4. **监管**：OFAC 制裁 Tornado Cash 后，类似工具的合规性有争议
+5. **合约漏洞**：Aave V2 历史上出过 flash loan 漏洞（2020）
+
+## 学习路径
+
+1. 先看 [Aave V3 Flash Loan 文档](https://docs.aave.com/developers/guides/flash-loans)
+2. 用 Foundry / Hardhat 在本地 fork 模拟器跑通
+3. 在 Goerli / Sepolia testnet 跑通
+4. 主网严格 budget，单笔 ≤ 0.01 ETH 试水
+
+## 该主题文章
+
+- [Aave V3 闪电贷套利流程](2026-07-19-aave-v3-arbitrage-flow/)
