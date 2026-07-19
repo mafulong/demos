@@ -4,6 +4,10 @@ weight: 1
 bookCollapseSection: true
 ---
 
+GitHub 上 star 较多的 crypto 套利 / 自动交易开源仓库，按套利类型分组。
+
+数据来源：GitHub Search API（2026-07-18 拉取）。Star 数会随时间变化，以仓库实际为准。
+
 ## 目录结构
 
 > 关于本站定位与发布流程，见 [关于本站](about/)。
